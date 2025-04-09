@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protótipo - Módulo Eventos Konquest V3</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Gestão de Eventos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="app-layout-no-sidebar">
+<div class="app-layout-no-sidebar">
 
-        <div class="app-main-content-full">
-            <div id="admin-view">
-                <!-- Admin List View Content -->
-                <div id="admin-list-area">
-            <header class="app-header">
-                 <div class="header-content">
-                    <h2 id="main-title">Eventos</h2>
-                     <div class="header-actions">
-                                 <button id="btn-show-create-event" class="btn btn-primary" title="Criar Novo Evento" aria-label="Criar Novo Evento">
-                                     <span class="material-icons">add</span>
-                                     Criar Evento
-                         </button>
-                    </div>
-                 </div>
-            </header>
+    <div class="app-main-content-full">
+        <div id="admin-view">
+            <!-- Admin List View Content -->
+            <div id="admin-list-area">
+                <header class="app-header">
+                     <div class="header-content">
+                        <h2 id="main-title">Eventos</h2>
+                         <div class="header-actions">
+                                     <button id="btn-show-create-event" class="btn btn-primary" title="Criar Novo Evento" aria-label="Criar Novo Evento">
+                                         <span class="material-icons">add</span>
+                                         Criar Evento
+                             </button>
+                        </div>
+                     </div>
+                </header>
 
-                    <!-- Container for the list content (card style) -->
-                    <div id="admin-event-lists-container" class="card">
+                <!-- Container for the list content (card style) -->
+                <div id="admin-event-lists-container" class="card">
 
-                        <!-- === MODIFIED FILTER SECTION === -->
-                         <div class="controls-container">
-                             <!-- Search Bar -->
-                             <div class="search-container">
-                                <label for="admin-event-search" class="sr-only">Pesquisar eventos</label>
-                                <span class="material-icons search-icon">search</span>
-                                <input type="text" id="admin-event-search" class="search-input" placeholder="Pesquisar eventos...">
-                             </div>
+                    <!-- === MODIFIED FILTER SECTION === -->
+                     <div class="controls-container">
+                         <!-- Search Bar -->
+                         <div class="search-container">
+                            <label for="admin-event-search" class="sr-only">Pesquisar eventos</label>
+                            <span class="material-icons search-icon">search</span>
+                            <input type="text" id="admin-event-search" class="search-input" placeholder="Pesquisar eventos...">
+                         </div>
 
-                             <!-- Filters Container -->
-                             <div class="filters-container">
-                                <!-- Tipo de Evento -->
+                         <!-- Filters Container -->
+                         <div class="filters-container">
+                            <!-- Tipo de Evento -->
+                            <div class="filter-chip-container">
                                 <button class="filter-chip" data-filter="type">
-                                    <span class="material-icons">videocam</span>
+                                    <span class="material-icons">category</span>
                                     Tipo
                                 </button>
                                 <div class="filter-chip-dropdown" id="type-dropdown">
-                                    <button class="filter-chip-option" data-value="all">
+                                    <button class="filter-chip-option selected" data-value="all">
                                         <span class="material-icons">check</span>
                                         Todos
                                     </button>
@@ -63,13 +64,16 @@
                                         Live
                                     </button>
                                 </div>
+                            </div>
 
-                                <!-- Status -->
+                            <!-- Status -->
+                             <div class="filter-chip-container">
                                 <button class="filter-chip" data-filter="status">
                                     <span class="material-icons">event_available</span>
                                     Status
                                 </button>
                                 <div class="filter-chip-dropdown" id="status-dropdown">
+                                    <!-- Note: Multiple 'selected' for multiple default checks -->
                                     <button class="filter-chip-option selected" data-value="open">
                                         <span class="material-icons">check</span>
                                         Eventos Abertos
@@ -78,9 +82,15 @@
                                         <span class="material-icons">check</span>
                                         Eventos Finalizados
                                     </button>
+                                     <button class="filter-chip-option" data-value="cancelled">
+                                        <span class="material-icons">check</span>
+                                        Cancelados
+                                    </button>
                                 </div>
+                             </div>
 
-                                <!-- Período -->
+                            <!-- Período -->
+                             <div class="filter-chip-container">
                                 <button class="filter-chip" data-filter="period">
                                     <span class="material-icons">date_range</span>
                                     Período
@@ -101,110 +111,134 @@
                                     <button class="filter-chip-option" data-value="month">
                                         <span class="material-icons">check</span>
                                         Este Mês
-                                 </button>
+                                    </button>
+                                    <div class="date-range-container">
+                                        <p class="date-range-label">Escolher data específica:</p>
+                                        <div class="date-picker-row">
+                                            <label for="custom-date" class="sr-only">Data específica</label>
+                                            <input type="date" id="custom-date" class="md-input date-picker">
+                                            <button class="btn btn-small date-apply-btn" id="apply-custom-date">Aplicar</button>
+                                        </div>
+                                        <p class="date-range-label">Escolher intervalo de datas:</p>
+                                        <div class="date-picker-row">
+                                            <label for="date-start" class="sr-only">Data inicial</label>
+                                            <input type="date" id="date-start" class="md-input date-picker" placeholder="Data inicial">
+                                            <span class="date-separator">até</span>
+                                            <label for="date-end" class="sr-only">Data final</label>
+                                            <input type="date" id="date-end" class="md-input date-picker" placeholder="Data final">
+                                            <button class="btn btn-small date-apply-btn" id="apply-date-range">Aplicar</button>
+                                        </div>
+                                    </div>
                                  </div>
                              </div>
                          </div>
-                         <!-- === END MODIFIED FILTER SECTION === -->
+                     </div>
+                     <!-- === END MODIFIED FILTER SECTION === -->
 
 
-                         <!-- Event Table Container -->
-                         <div class="event-table-container">
-                            <div id="admin-list-loading" class="loading-skeleton hidden">Carregando eventos...</div>
-                            <table id="admin-event-table" class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th><input type="checkbox" class="md-checkbox" title="Selecionar Todos"></th>
-                                        <th>Evento</th>
-                                        <th>Data</th>
-                                        <th>Matrículas</th>
-                                        <th>Presenças</th>
-                                        <th>Status</th>
-                                        <th>Menu</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="admin-event-tbody">
-                                    <!-- Event rows will be injected here by JavaScript -->
-                                </tbody>
-                            </table>
-                         </div>
-                    </div> <!-- End #admin-event-lists-container -->
-                </div> <!-- End #admin-list-area -->
+                     <!-- Event Table Container -->
+                     <div class="event-table-container">
+                        <div id="admin-list-loading" class="loading-skeleton hidden">Carregando eventos...</div>
+                        <!-- USANDO class="data-table" E O ID -->
+                        <table id="admin-event-table" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="md-checkbox" title="Selecionar Todos"></th>
+                                    <th>Evento</th>
+                                    <th>Data</th>
+                                    <th>Matrículas</th>
+                                    <th>Presenças</th>
+                                    <th>Status</th>
+                                    <th>Menu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-event-tbody">
+                                <!-- Event rows will be injected here by JavaScript -->
+                                 <tr class="no-pointer"> <!-- Example of empty state -->
+                                     <td colspan="7" class="empty-state" style="display: table-cell;"> <!-- Use table-cell for colspan -->
+                                         Nenhum evento encontrado.
+                                     </td>
+                                 </tr>
+                            </tbody>
+                        </table>
+                     </div>
+                </div> <!-- End #admin-event-lists-container -->
+            </div> <!-- End #admin-list-area -->
 
-                <!-- Manage Event View (Initially Hidden) -->
-                <div id="manage-event-view" class="view-section hidden">
-                    <div class="event-content-container">
-                        <div class="event-header">
-                            <div class="event-header-left">
-                                <button id="back-to-events" class="icon-button" title="Voltar">
-                                    <span class="material-icons">arrow_back</span>
-                                </button>
-                                <div class="event-title-container">
-                                    <div class="event-title-row">
-                                        <h2 id="manage-event-title">Nome do Evento</h2>
-                                        <span id="manage-event-type-icon" class="material-icons">videocam</span>
+            <!-- Manage Event View (Initially Hidden) -->
+            <div id="manage-event-view" class="view-section hidden">
+                <div class="event-content-container">
+                    <header class="event-header">
+                        <div class="event-header-left">
+                            <button id="back-to-events" class="icon-button" title="Voltar">
+                                <span class="material-icons">arrow_back</span>
+                            </button>
+                            <div class="event-title-container">
+                                <div class="event-title-row">
+                                    <span id="manage-event-type-icon" class="material-icons"></span>
+                                    <h2 id="manage-event-title">Nome do Evento</h2>
+                                 </div>
                              </div>
-                         </div>
-                            </div>
-                            <div class="event-header-actions">
-                                <!-- Date display for single-day events -->
-                                <div class="single-date-display hidden">
-                                    <span class="day-prefix">Dia: </span>
-                                    <span class="day-content"></span>
-                    </div>
-
-                                <!-- Filter by session - shown only for multi-day events -->
-                                <div class="filter-session-container">
-                                    <button class="filter-chip day-chip" data-filter="session">
-                                        <span class="day-prefix">Dia: </span>
-                                        <span class="day-content"></span>
-                                        <span class="material-icons dropdown-icon">arrow_drop_down</span>
-                             </button>
-                                    <div class="filter-chip-dropdown" id="session-dropdown">
-                                        <div class="session-select-container">
-                                            <div class="day-options-container">
-                                                <!-- Day options populated by JS -->
-                         </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="header-metrics">
-                                    <div class="metric">
-                                        <span id="indicator-inscritos">0</span> Inscritos
-                                     </div>
-                                    <div class="metric">
-                                        <span id="indicator-presentes">0</span> Presentes
-                                    </div>
-                                </div>
-                                <div class="metrics-divider"></div>
-                                <button class="icon-button" title="Editar Evento">
-                                    <span class="material-icons">edit</span>
-                                </button>
-                                <button class="icon-button" title="Adicionar Participantes">
-                                    <span class="material-icons">person_add</span>
-                                </button>
-                                <button class="icon-button" title="Importar Lista">
-                                    <span class="material-icons">upload_file</span>
-                                </button>
-                                <button class="icon-button" title="Gerar QR Code">
-                                    <span class="material-icons">qr_code_2</span>
-                                </button>
-                                <button class="icon-button" title="Imprimir Lista">
-                                    <span class="material-icons">print</span>
-                                </button>
-                            </div>
                         </div>
-
-                        <div class="controls-container">
-                            <div class="search-container">
-                                <span class="material-icons search-icon">search</span>
-                                <input type="text" id="participant-search" class="search-input" placeholder="Buscar participantes...">
+                        <div class="event-header-actions">
+                            <!-- Date display for single-day events -->
+                            <div class="single-date-display hidden">
+                                <span class="day-prefix">Dia: </span>
+                                <span class="day-content"></span>
                             </div>
-                            <div class="filters-container">
-                                <!-- Filter by presence -->
+
+                            <!-- Filter by session - shown only for multi-day events -->
+                            <div class="filter-session-container hidden"> <!-- Initially hidden -->
+                                <button class="filter-chip day-chip" data-filter="session">
+                                    <span class="day-prefix">Dia: </span>
+                                    <span class="day-content">Selecione</span>
+                                    <span class="material-icons dropdown-icon">arrow_drop_down</span>
+                                 </button>
+                                <div class="filter-chip-dropdown" id="session-dropdown">
+                                     <div class="day-options-container">
+                                        <!-- Day options populated by JS -->
+                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="header-metrics">
+                                <div class="metric">
+                                    <span id="indicator-inscritos">0</span> Inscritos
+                                 </div>
+                                <div class="metric">
+                                    <span id="indicator-presentes">0</span> Presentes
+                                </div>
+                            </div>
+                            <div class="metrics-divider"></div>
+                            <button class="icon-button" title="Editar Evento" data-action="edit-current">
+                                <span class="material-icons">edit</span>
+                            </button>
+                            <button class="icon-button" title="Adicionar Participantes">
+                                <span class="material-icons">person_add</span>
+                            </button>
+                            <button class="icon-button" title="Importar Lista">
+                                <span class="material-icons">upload_file</span>
+                            </button>
+                            <button class="icon-button" title="Gerar QR Code" data-action="qr-current">
+                                <span class="material-icons">qr_code_2</span>
+                            </button>
+                            <button class="icon-button" title="Imprimir Lista">
+                                <span class="material-icons">print</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <div class="controls-container">
+                        <div class="search-container">
+                            <label for="participant-search" class="sr-only">Buscar participantes</label>
+                            <span class="material-icons search-icon">search</span>
+                            <input type="text" id="participant-search" class="search-input" placeholder="Buscar participantes...">
+                        </div>
+                        <div class="filters-container">
+                            <!-- Filter by presence -->
+                             <div class="filter-chip-container">
                                 <button class="filter-chip" data-filter="presence">
-                                    <span class="material-icons">event_available</span>
+                                    <span class="material-icons">check_circle_outline</span> <!-- Changed icon -->
                                     Presença
                                 </button>
                                 <div class="filter-chip-dropdown" id="presence-dropdown">
@@ -220,237 +254,276 @@
                                         <span class="material-icons">check</span>
                                         Ausentes
                                     </button>
-                                    </div>
                                 </div>
                              </div>
-
-                             <div class="participant-table-container">
-                            <table class="participant-table data-table">
-                                    <thead>
-                                        <tr>
-                                        <th>
-                                            <input type="checkbox" class="md-checkbox" id="select-all-participants" title="Selecionar Todos">
-                                        </th>
-                                        <th>Nome</th>
-                                        <th>Email</th>
-                                        <th>Data de Inscrição</th>
-                                        <th>Presença</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </thead>
-                                <tbody id="participant-tbody">
-                                    <!-- Participant rows will be injected here by JavaScript -->
-                                </tbody>
-                                </table>
-                             </div>
-                              </div>
-                </div> <!-- End #manage-event-view -->
-
-            </div> <!-- End #admin-view -->
-
-        </div> <!-- End .app-main-content-full -->
-
-    </div> <!-- End .app-layout-no-sidebar -->
-
-
-    <!-- Modal Area -->
-    <div id="modal-backdrop" class="modal-backdrop hidden">
-          <div id="create-event-modal" class="modal">
-             <div class="modal-header">
-                 <h3 id="modal-title">Criar Novo Evento</h3>
-                 <button id="btn-close-modal" class="icon-button close-modal-btn" title="Fechar" aria-label="Fechar Modal"><span class="material-icons">close</span></button>
-             </div>
-             <p class="help-text modal-help">Preencha os detalhes abaixo para agendar seu evento. Os campos marcados com * são obrigatórios.</p>
-
-             <div class="modal-content">
-                 <details class="modal-section accordion" open>
-                     <summary><h4>Detalhes Básicos</h4></summary>
-                     <div class="form-row">
-                         <div class="form-group half-width">
-                             <label for="modal-event-title">Nome do Evento *</label>
-                             <input type="text"
-                                    id="modal-event-title"
-                                    class="md-input"
-                                    required
-                                    placeholder="Ex: Workshop de Liderança"
-                                    data-validation="required"
-                                    data-error="O nome do evento é obrigatório">
-                             <span class="input-error-message"></span>
-                         </div>
-                         <div class="form-group half-width">
-                             <label for="modal-event-code">Código Interno</label>
-                             <input type="text"
-                                    id="modal-event-code"
-                                    class="md-input"
-                                    placeholder="Ex: WS-LID-2024"
-                                    data-tooltip="Código opcional para referência interna">
-                         </div>
+                        </div>
                      </div>
-                     <div class="form-group">
-                         <label for="modal-event-description">Descrição</label>
-                         <textarea id="modal-event-description"
-                                 class="md-input"
-                                 rows="3"
-                                 placeholder="Descreva o objetivo e conteúdo do evento..."
-                                 data-tooltip="Uma boa descrição ajuda os participantes a entenderem melhor o evento"></textarea>
-                     </div>
-                 </details>
 
-                 <details class="modal-section accordion">
-                     <summary><h4>Classificação</h4></summary>
-                     <div class="form-row">
-                         <div class="form-group third-width">
-                             <label for="modal-event-type">Tipo *</label>
-                             <select id="modal-event-type"
-                                     class="md-select"
-                                     required
-                                     data-validation="required"
-                                     data-error="Selecione o tipo do evento">
-                                 <option value="">Selecione o tipo</option>
-                                 <option value="Presencial">Presencial</option>
-                                 <option value="Live">Live</option>
-                             </select>
-                             <span class="input-error-message"></span>
-                         </div>
-                         <div class="form-group third-width">
-                             <label for="modal-event-category">Categoria</label>
-                             <select id="modal-event-category"
-                                     class="md-select"
-                                     data-tooltip="Ajuda a organizar e filtrar os eventos">
-                                 <option value="">Selecione uma categoria</option>
-                                 <option>Tecnologia</option>
-                                 <option>RH</option>
-                                 <option>Vendas</option>
-                             </select>
-                         </div>
-                         <div class="form-group third-width">
-                             <label for="modal-event-language">Idioma</label>
-                             <select id="modal-event-language" class="md-select">
-                                 <option>Português</option>
-                                 <option>Inglês</option>
-                             </select>
-                         </div>
+                     <div class="participant-table-container">
+                        <!-- USANDO class="data-table" E O ID no tbody -->
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" class="md-checkbox" id="select-all-participants" title="Selecionar Todos">
+                                    </th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Data de Inscrição</th>
+                                    <th>Presença</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="participant-tbody">
+                                <!-- Participant rows will be injected here by JavaScript -->
+                                <tr class="no-pointer"> <!-- Example of empty state -->
+                                    <td colspan="6" class="empty-state" style="display: table-cell;">
+                                        Nenhum participante encontrado.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                      </div>
-                 </details>
+                </div>
+            </div> <!-- End #manage-event-view -->
 
-                 <details class="modal-section accordion">
-                     <summary><h4>Imagem de Capa</h4></summary>
-                     <div class="form-group">
-                         <label for="modal-event-image">Imagem (Proporção 3:1)</label>
-                         <input type="file"
-                                id="modal-event-image"
-                                class="md-input"
-                                accept="image/*"
-                                data-tooltip="Recomendado: 1200x400 pixels">
-                     </div>
-                 </details>
+        </div> <!-- End #admin-view -->
 
-                 <details class="modal-section accordion">
-                     <summary><h4>Local e Data *</h4></summary>
-                     <div id="modal-location-field" class="form-group">
-                         <label for="modal-event-location">Endereço (Presencial) *</label>
+    </div> <!-- End .app-main-content-full -->
+
+</div> <!-- End .app-layout-no-sidebar -->
+
+
+<!-- Modal Area -->
+<div id="modal-backdrop" class="modal-backdrop hidden">
+      <div id="create-event-modal" class="modal">
+         <div class="modal-header">
+             <h3 id="modal-title">Criar Novo Evento</h3>
+             <button id="btn-close-modal" class="icon-button close-modal-btn" title="Fechar" aria-label="Fechar Modal"><span class="material-icons">close</span></button>
+         </div>
+         
+         <div class="modal-content">
+             <details class="modal-section accordion" open>
+                 <summary><h4>Detalhes Básicos</h4></summary>
+                 <div class="form-row">
+                     <div class="form-group half-width">
+                         <label for="modal-event-title">Nome do Evento *</label>
                          <input type="text"
-                                id="modal-event-location"
+                                id="modal-event-title"
                                 class="md-input"
-                                placeholder="Ex: Rua Example, 123 - Sala 45"
-                                data-validation="required-if-presencial"
-                                data-error="Informe o endereço do evento">
+                                required
+                                placeholder="Ex: Workshop de Liderança"
+                                data-validation="required"
+                                data-error="O nome do evento é obrigatório">
                          <span class="input-error-message"></span>
                      </div>
-                     <div id="modal-link-field" class="form-group hidden">
-                         <label for="modal-event-link">Link da Transmissão (Live) *</label>
-                         <input type="url"
-                                id="modal-event-link"
+                     <div class="form-group half-width">
+                         <label for="modal-event-code">Código Interno</label>
+                         <input type="text"
+                                id="modal-event-code"
                                 class="md-input"
-                                placeholder="https://exemplo.com/sua-reuniao"
-                                data-validation="required-if-live"
-                                data-error="Informe o link da transmissão">
+                                placeholder="Ex: WS-LID-2025"
+                                data-tooltip="Código opcional para referência interna">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="modal-event-description">Descrição</label>
+                     <textarea id="modal-event-description"
+                             class="md-input"
+                             rows="3"
+                             placeholder="Descreva o objetivo e conteúdo do evento..."
+                             data-tooltip="Uma boa descrição ajuda os participantes a entenderem melhor o evento"></textarea>
+                 </div>
+             </details>
+
+             <details class="modal-section accordion">
+                 <summary><h4>Classificação</h4></summary>
+                 <div class="form-row">
+                     <div class="form-group third-width">
+                         <label for="modal-event-type">Tipo *</label>
+                         <select id="modal-event-type"
+                                 class="md-select"
+                                 required
+                                 data-validation="required"
+                                 data-error="Selecione o tipo do evento">
+                             <option value="">Selecione o tipo</option>
+                             <option value="Presencial">Presencial</option>
+                             <option value="Live">Live</option>
+                         </select>
                          <span class="input-error-message"></span>
                      </div>
-                     <div id="modal-sessions-container">
-                         <div class="session-input">
-                             <label class="sr-only" for="session-date-1">Data da Sessão</label>
-                             <input type="date"
-                                    id="session-date-1"
-                                    class="md-input session-date"
-                                    required
-                                    data-validation="required"
-                                    data-error="Informe a data da sessão"
-                                    aria-label="Data da Sessão">
-                             <label class="sr-only" for="session-start-1">Hora de Início</label>
-                             <input type="time"
-                                    id="session-start-1"
-                                    class="md-input session-start"
-                                    required
-                                    data-validation="required"
-                                    data-error="Informe o horário de início"
-                                    aria-label="Hora de Início">
-                             <label class="sr-only" for="session-end-1">Hora de Conclusão</label>
-                             <input type="time"
-                                    id="session-end-1"
-                                    class="md-input session-end"
-                                    required
-                                    data-validation="required"
-                                    data-error="Informe o horário de término"
-                                    aria-label="Hora de Conclusão">
-                             <span class="input-error-message"></span> <!-- Error message per session -->
-                         </div>
+                     <div class="form-group third-width">
+                         <label for="modal-event-category">Categoria</label>
+                         <select id="modal-event-category"
+                                 class="md-select"
+                                 data-tooltip="Ajuda a organizar e filtrar os eventos">
+                             <option value="">Selecione uma categoria</option>
+                             <option>Tecnologia</option>
+                             <option>RH</option>
+                             <option>Vendas</option>
+                         </select>
                      </div>
-                     <button type="button"
-                             id="btn-modal-add-session"
-                             class="btn btn-secondary btn-small"
-                             data-tooltip="Adicione mais sessões para eventos com múltiplos dias">
-                         <span class="material-icons">add</span> Adicionar data extra
+                     <div class="form-group third-width">
+                         <label for="modal-event-language">Idioma</label>
+                         <select id="modal-event-language" class="md-select">
+                             <option>Português</option>
+                             <option>Inglês</option>
+                         </select>
+                     </div>
+                 </div>
+             </details>
+
+             <details class="modal-section accordion">
+                 <summary><h4>Imagem de Capa</h4></summary>
+                 <div class="form-group">
+                     <label for="modal-event-image">Imagem (Proporção 3:1)</label>
+                     <input type="file"
+                            id="modal-event-image"
+                            class="md-input"
+                            accept="image/*"
+                            data-tooltip="Recomendado: 1200x400 pixels">
+                 </div>
+             </details>
+
+             <details class="modal-section accordion">
+                 <summary><h4>Local e Data *</h4></summary>
+                 <div id="modal-location-field" class="form-group">
+                     <label for="modal-event-location">Endereço (Presencial) *</label>
+                     <input type="text"
+                            id="modal-event-location"
+                            class="md-input"
+                            placeholder="Ex: Rua Example, 123 - Sala 45"
+                            data-validation="required-if-presencial"
+                            data-error="Informe o endereço do evento">
+                     <span class="input-error-message"></span>
+                 </div>
+                 <div id="modal-link-field" class="form-group hidden">
+                     <label for="modal-event-link">Link da Transmissão (Live) *</label>
+                     <input type="url"
+                            id="modal-event-link"
+                            class="md-input"
+                            placeholder="https://exemplo.com/sua-reuniao"
+                            data-validation="required-if-live"
+                            data-error="Informe o link da transmissão">
+                     <span class="input-error-message"></span>
+                 </div>
+                 <div id="modal-sessions-container">
+                     <div class="session-input">
+                         <label class="sr-only" for="session-date-1">Data da Sessão</label>
+                         <input type="date"
+                                id="session-date-1"
+                                class="md-input session-date"
+                                required
+                                data-validation="required"
+                                data-error="Informe a data da sessão"
+                                aria-label="Data da Sessão">
+                         <label class="sr-only" for="session-start-1">Hora de Início</label>
+                         <input type="time"
+                                id="session-start-1"
+                                class="md-input session-start"
+                                required
+                                data-validation="required"
+                                data-error="Informe o horário de início"
+                                aria-label="Hora de Início">
+                         <label class="sr-only" for="session-end-1">Hora de Conclusão</label>
+                         <input type="time"
+                                id="session-end-1"
+                                class="md-input session-end"
+                                required
+                                data-validation="required"
+                                data-error="Informe o horário de término"
+                                aria-label="Hora de Conclusão">
+                         <span class="input-error-message"></span> <!-- Error message per session -->
+                     </div>
+                 </div>
+                 <button type="button"
+                         id="btn-modal-add-session"
+                         class="btn btn-secondary btn-small"
+                         data-tooltip="Adicione mais sessões para eventos com múltiplos dias">
+                     <span class="material-icons">add</span> Adicionar data extra
+                 </button>
+             </details>
+
+             <details class="modal-section accordion">
+                 <summary><h4>Pessoas</h4></summary>
+                  <div class="people-buttons">
+                     <button type="button" class="btn btn-secondary btn-small"
+                             data-tooltip="Adicione quem irá ministrar o evento">
+                         <span class="material-icons">person_add</span> Instrutores
                      </button>
-                 </details>
+                     <button type="button" class="btn btn-secondary btn-small"
+                             data-tooltip="Defina grupos que podem participar">
+                         <span class="material-icons">group_add</span> Grupos
+                     </button>
+                     <button type="button" class="btn btn-secondary btn-small"
+                             data-tooltip="Adicione pessoas que podem gerenciar o evento">
+                         <span class="material-icons">supervisor_account</span> Contribuidores
+                     </button>
+                 </div>
+             </details>
 
-                 <details class="modal-section accordion">
-                     <summary><h4>Pessoas</h4></summary>
-                      <div class="people-buttons">
-                         <button type="button" class="btn btn-secondary btn-small"
-                                 data-tooltip="Adicione quem irá ministrar o evento">
-                             <span class="material-icons">person_add</span> Instrutores
-                         </button>
-                         <button type="button" class="btn btn-secondary btn-small"
-                                 data-tooltip="Defina grupos que podem participar">
-                             <span class="material-icons">group_add</span> Grupos
-                         </button>
-                         <button type="button" class="btn btn-secondary btn-small"
-                                 data-tooltip="Adicione pessoas que podem gerenciar o evento">
-                             <span class="material-icons">supervisor_account</span> Contribuidores
-                         </button>
-                     </div>
-                 </details>
+             <details class="modal-section accordion">
+                 <summary><h4>Configurações</h4></summary>
+                 <div class="form-group-checkbox">
+                     <input type="checkbox"
+                            id="modal-event-notify"
+                            class="md-checkbox"
+                            data-tooltip="Envia confirmações e lembretes automáticos por email">
+                     <label for="modal-event-notify">Notificar matriculados via e-mail</label>
+                 </div>
+                 <div class="form-group-checkbox">
+                     <input type="checkbox"
+                            id="modal-event-certificate"
+                            class="md-checkbox"
+                            data-tooltip="Gera certificado automaticamente para quem tiver presença confirmada">
+                     <label for="modal-event-certificate">Gerar Certificado Padrão</label>
+                 </div>
+             </details>
+         </div>
 
-                 <details class="modal-section accordion">
-                     <summary><h4>Configurações</h4></summary>
-                     <div class="form-group-checkbox">
-                         <input type="checkbox"
-                                id="modal-event-notify"
-                                class="md-checkbox"
-                                data-tooltip="Envia confirmações e lembretes automáticos por email">
-                         <label for="modal-event-notify">Notificar matriculados via e-mail</label>
-                     </div>
-                     <div class="form-group-checkbox">
-                         <input type="checkbox"
-                                id="modal-event-certificate"
-                                class="md-checkbox"
-                                data-tooltip="Gera certificado automaticamente para quem tiver presença confirmada">
-                         <label for="modal-event-certificate">Gerar Certificado Padrão</label>
-                     </div>
-                 </details>
-             </div>
+         <div class="modal-actions">
+            <button type="button" id="btn-modal-cancel" class="btn btn-text">Cancelar</button>
+            <button type="button" id="btn-modal-publish" class="btn btn-primary">
+                <span class="material-icons">publish</span>
+                Publicar Evento
+            </button>
+         </div>
+      </div>
+</div>
 
-             <div class="modal-actions">
-                <button type="button" id="btn-modal-cancel" class="btn btn-secondary">Cancelar</button>
-                <button type="button" id="btn-modal-publish" class="btn btn-primary">
-                    <span class="material-icons">publish</span>
-                    Publicar Evento
+<!-- Modal QR Code -->
+<div id="qr-code-modal" class="modal-backdrop hidden">
+    <div class="qr-code-container">
+        <div class="qr-code-header">
+            <h3>QR Code de Presença</h3>
+            <button class="icon-button" id="close-qr-modal" title="Fechar">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="qr-code-content">
+            <div class="qr-code-image">
+                <!-- QR Code será inserido aqui via JS -->
+                <svg width="100%" height="100%" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H9V1H1V9H0V0ZM28 0H19V1H27V9H28V0ZM0 28V19H1V27H9V28H0ZM28 28H19V27H27V19H28V28ZM3 3H7V7H3V3ZM22 3H26V7H22V3ZM3 22H7V26H3V22ZM13 16H16V13H13V10H10V13H7V10H4V13H10V16H13ZM19 13H16V16H19V13ZM22 19H25V22H22V19ZM19 19H10V22H13V25H16V22H19V19ZM22 10H25V13H22V10ZM19 7H13V4H10V7H7V10H10V7H13V10H16V7H19Z" fill="black"></path>
+                </svg>
+            </div>
+            <div class="qr-code-actions">
+                <button class="btn" id="copy-svg-btn">
+                    <span class="material-icons">content_copy</span>
+                    Copiar SVG
                 </button>
-             </div>
-          </div>
+                <button class="btn" id="print-qr-btn">
+                    <span class="material-icons">print</span>
+                    Imprimir
+                </button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
+
+
