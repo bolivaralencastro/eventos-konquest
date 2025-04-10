@@ -1076,3 +1076,177 @@
          .qr-code-actions { flex-direction: column; width: 100%; }
          .qr-code-actions .btn { width: 100%; justify-content: center; }
      }
+
+     /* === Check-in Page Styles === */
+     #checkin-view {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         min-height: 100vh;
+         background-color: var(--md3-surface);
+         padding: 20px;
+     }
+
+     .checkin-container {
+         background: var(--md3-surface-container);
+         border-radius: 16px;
+         padding: 24px;
+         width: 100%;
+         max-width: 480px;
+         box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08);
+     }
+
+     .checkin-header {
+         text-align: center;
+         margin-bottom: 32px;
+     }
+
+     .checkin-header h1 {
+         font-size: 24px;
+         color: var(--md3-on-surface);
+         margin: 0;
+     }
+
+     .event-info-card {
+         background: var(--md3-surface-container-high);
+         border-radius: 12px;
+         padding: 20px;
+         margin-bottom: 24px;
+     }
+
+     .event-info-header {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         margin-bottom: 16px;
+     }
+
+     .event-info-header h2 {
+         font-size: 18px;
+         color: var(--md3-on-surface);
+         margin: 0;
+     }
+
+     .event-info-details {
+         display: flex;
+         flex-direction: column;
+         gap: 12px;
+     }
+
+     .info-row {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         color: var(--md3-on-surface-variant);
+     }
+
+     .info-row .material-icons {
+         font-size: 20px;
+         color: var(--md3-primary);
+     }
+
+     .checkin-form {
+         display: flex;
+         flex-direction: column;
+         gap: 20px;
+     }
+
+     .form-group {
+         display: flex;
+         flex-direction: column;
+         gap: 8px;
+     }
+
+     .form-group label {
+         font-size: 14px;
+         color: var(--md3-on-surface-variant);
+     }
+
+     .input-container {
+         position: relative;
+     }
+
+     .input-container input {
+         width: 100%;
+         padding: 12px 16px;
+         border: 1px solid var(--md3-outline);
+         border-radius: 8px;
+         font-size: 16px;
+         color: var(--md3-on-surface);
+         background: var(--md3-surface);
+         transition: border-color 0.2s;
+     }
+
+     .input-container input:focus {
+         outline: none;
+         border-color: var(--md3-primary);
+     }
+
+     .primary-button {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         width: 100%;
+         padding: 12px 24px;
+         background: var(--md3-primary);
+         color: var(--md3-on-primary);
+         border: none;
+         border-radius: 8px;
+         font-size: 16px;
+         font-weight: 500;
+         cursor: pointer;
+         transition: background-color 0.2s;
+     }
+
+     .primary-button:hover {
+         background: var(--md3-primary-container);
+         color: var(--md3-on-primary-container);
+     }
+
+     /* Modal de Sucesso */
+     #success-modal {
+         display: none;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(0, 0, 0, 0.5);
+         justify-content: center;
+         align-items: center;
+         z-index: 1000;
+     }
+
+     #success-modal.show {
+         display: flex;
+     }
+
+     .modal-content {
+         background: var(--md3-surface);
+         border-radius: 16px;
+         padding: 32px;
+         text-align: center;
+         max-width: 400px;
+         width: 90%;
+     }
+
+     .success-icon {
+         color: var(--md3-primary);
+         font-size: 48px;
+         margin-bottom: 16px;
+     }
+
+     .success-icon .material-icons {
+         font-size: 48px;
+     }
+
+     .modal-content h2 {
+         color: var(--md3-on-surface);
+         margin: 0 0 8px 0;
+     }
+
+     .modal-content p {
+         color: var(--md3-on-surface-variant);
+         margin: 0 0 24px 0;
+     }

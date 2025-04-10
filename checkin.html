@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-in de Evento</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-layout-no-sidebar">
+        <div class="app-main-content-full">
+            <div id="checkin-view" class="view-container">
+                <div class="checkin-container">
+                    <div class="checkin-header">
+                        <h1>Check-in de Evento</h1>
+                    </div>
+                    
+                    <div class="checkin-content">
+                        <div class="event-info-card">
+                            <div class="event-info-header">
+                                <span class="material-icons event-type-icon" id="checkin-event-type-icon">location_on</span>
+                                <h2 id="checkin-event-title">Nome do Evento</h2>
+                            </div>
+                            
+                            <div class="event-info-details">
+                                <div class="info-row">
+                                    <span class="material-icons">event</span>
+                                    <span id="checkin-event-date">Data do Evento</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="material-icons">schedule</span>
+                                    <span id="checkin-event-time">Horário do Evento</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkin-form">
+                            <div class="form-group">
+                                <label for="participant-identifier">Identificação</label>
+                                <div class="input-container">
+                                    <input type="text" id="participant-identifier" placeholder="Digite seu email, CPF ou matrícula">
+                                </div>
+                            </div>
+                            
+                            <button id="confirm-checkin" class="primary-button">
+                                <span class="material-icons">check_circle</span>
+                                Confirmar Presença
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Sucesso -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <span class="material-icons">check_circle</span>
+            </div>
+            <h2>Check-in Realizado!</h2>
+            <p>Seu check-in foi registrado com sucesso.</p>
+            <button id="close-success-modal" class="primary-button">Fechar</button>
+        </div>
+    </div>
+
+    <script src="checkin.js"></script>
+</body>
+</html> 

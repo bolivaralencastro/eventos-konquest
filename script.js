@@ -1327,31 +1327,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // === QR Code Modal Functions ===
-function showQRCodeModal(eventData) {
-    const modal = document.getElementById('qr-code-modal');
-    const qrCodeImage = modal.querySelector('.qr-code-image'); // Target element inside modal
-     if (!modal || !qrCodeImage) return;
-
-    // Limpa conteúdo anterior
-    qrCodeImage.innerHTML = '';
-
-    // Cria o SVG do QR Code (simulação)
-    const eventId = eventData?.id || 'demo-id';
-    const eventName = eventData?.name || 'Evento Demo';
-
-    // URL para o QR Code - em um app real, esta seria uma URL específica
-    const qrUrl = `https://example.com/checkin?event=${eventId}`; // Use a real domain if possible
-
-    // Adiciona um QR Code simulado (visualmente representativo)
-     const svg = generateQRCodeSVG(qrUrl); // Use a fixed visual representation
-     // TODO: Replace with a real QR code library like QRCode.js or QRious in a real app
-     // Ex (using a library): new QRCode(qrCodeImage, qrUrl);
-     qrCodeImage.appendChild(svg);
-
-
-    // Exibe o modal
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Impede o scroll da página
+function showQRCodeModal(event) {
+    // Criar uma URL base para o check-in
+    const baseUrl = window.location.origin; // Pega o domínio atual
+    const checkinUrl = `${baseUrl}/checkin.html?eventId=${event.id}&sessionId=${event.sessions[0].id}`;
+    
+    // Gerar o QR Code
+    const qrCodeContainer = document.querySelector('.qr-code-image');
+    qrCodeContainer.innerHTML = ''; // Limpar conteúdo anterior
+    
+    QRCode.toCanvas(qrCodeContainer, checkinUrl, {
+        width: 256,
+        height: 256,
+        margin: 1,
+        color: {
+            dark: '#000000',
+            light: '#ffffff'
+        }
+    }, function (error) {
+        if (error) console.error(error);
+    });
+    
+    // Atualizar título do modal
+    document.querySelector('.qr-code-header h3').textContent = `QR Code - ${event.name}`;
+    
+    // Mostrar o modal
+    document.getElementById('qr-code-modal').classList.remove('hidden');
+    document.getElementById('modal-backdrop').classList.remove('hidden');
 }
 
 function hideQRCodeModal() {
