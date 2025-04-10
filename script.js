@@ -1165,8 +1165,8 @@ document.addEventListener('DOMContentLoaded', () => {
      });
 
 
-     // Add listener for participant search input
-     participantSearch.addEventListener('input', () => filterParticipants());
+    // Add listener for participant search input
+    participantSearch.addEventListener('input', () => filterParticipants());
 
     // Filtering Listeners
     adminEventSearch.addEventListener('input', applyFiltersAndRender);
@@ -1340,58 +1340,36 @@ function showQRCodeModal(event) {
     console.log('Gerando QR Code para URL:', checkinUrl);
     
     // Limpar container anterior
-    const qrCodeContainer = document.getElementById('qr-code-container');
-    qrCodeContainer.innerHTML = '';
-    
-    // Criar elemento canvas para o QR Code
-    const canvas = document.createElement('canvas');
-    qrCodeContainer.appendChild(canvas);
+    const qrCodeDisplay = document.getElementById('qr-code-display');
+    qrCodeDisplay.innerHTML = '';
     
     // Gerar QR Code
-    QRCode.toCanvas(canvas, checkinUrl, {
+    new QRCode(qrCodeDisplay, {
+        text: checkinUrl,
         width: 256,
         height: 256,
-        margin: 2,
-        color: {
-            dark: '#000000',
-            light: '#ffffff'
-        },
-        errorCorrectionLevel: 'H'
-    }, function (error) {
-        if (error) {
-            console.error('Erro ao gerar QR Code:', error);
-            qrCodeContainer.innerHTML = '<p class="error-message">Erro ao gerar QR Code. Por favor, tente novamente.</p>';
-            return;
-        }
-        console.log('QR Code gerado com sucesso');
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
-    
-    // Atualizar título do modal
-    document.querySelector('.qr-code-header h3').textContent = `QR Code - ${event.name}`;
     
     // Mostrar o modal
     document.getElementById('qr-code-modal').classList.remove('hidden');
-    document.getElementById('modal-backdrop').classList.remove('hidden');
     
-    // Configurar botões de ação
+    // Configurar botões
     setupQRCodeActions(checkinUrl, event.name);
 }
 
 function setupQRCodeActions(checkinUrl, eventName) {
     // Configurar botão de cópia
-    const copyButton = document.getElementById('copy-svg-btn');
-    copyButton.onclick = function() {
-        const canvas = document.querySelector('#qr-code-container canvas');
-        if (canvas) {
-            canvas.toBlob(function(blob) {
-                const item = new ClipboardItem({ "image/png": blob });
-                navigator.clipboard.write([item]).then(function() {
-                    alert('QR Code copiado para a área de transferência!');
-                }).catch(function(error) {
-                    console.error('Erro ao copiar QR Code:', error);
-                    alert('Erro ao copiar QR Code. Por favor, tente novamente.');
-                });
-            });
+    const copyButton = document.getElementById('copy-qr-btn');
+    copyButton.onclick = async function() {
+        try {
+            await navigator.clipboard.writeText(checkinUrl);
+            alert('Link do QR Code copiado para a área de transferência!');
+        } catch (err) {
+            console.error('Erro ao copiar:', err);
+            alert('Não foi possível copiar o link. Por favor, tente novamente.');
         }
     };
     
@@ -1405,17 +1383,52 @@ function setupQRCodeActions(checkinUrl, eventName) {
             <head>
                 <title>QR Code - ${eventName}</title>
                 <style>
-                    body { margin: 0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-                    h1 { font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 20px; }
-                    .qr-code { width: 256px; height: 256px; }
-                    .info { font-family: Arial, sans-serif; font-size: 12px; margin-top: 20px; color: #666; }
+                    body { 
+                        margin: 0; 
+                        display: flex; 
+                        flex-direction: column; 
+                        align-items: center; 
+                        padding: 40px; 
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 { 
+                        font-size: 24px; 
+                        margin-bottom: 20px; 
+                        color: #333;
+                    }
+                    .qr-container { 
+                        padding: 20px; 
+                        background: #fff; 
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+                        border-radius: 8px;
+                    }
+                    .qr-code { 
+                        width: 256px; 
+                        height: 256px;
+                    }
+                    .info { 
+                        margin-top: 20px; 
+                        color: #666; 
+                        font-size: 14px;
+                        text-align: center;
+                    }
                 </style>
             </head>
             <body>
                 <h1>QR Code - ${eventName}</h1>
-                <img src="${document.querySelector('#qr-code-container canvas').toDataURL()}" class="qr-code"/>
-                <p class="info">URL: ${checkinUrl}</p>
-                <script>window.print(); window.close();</script>
+                <div class="qr-container">
+                    ${document.getElementById('qr-code-display').innerHTML}
+                </div>
+                <p class="info">
+                    Escaneie este QR Code para registrar presença no evento.<br>
+                    <small>${checkinUrl}</small>
+                </p>
+                <script>
+                    window.onload = () => {
+                        window.print();
+                        window.close();
+                    };
+                </script>
             </body>
             </html>
         `);
