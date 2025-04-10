@@ -1332,11 +1332,13 @@ function showQRCodeModal(event) {
     const baseUrl = window.location.origin; // Pega o domínio atual
     const checkinUrl = `${baseUrl}/checkin.html?eventId=${event.id}&sessionId=${event.sessions[0].id}`;
     
+    console.log('Gerando QR Code para URL:', checkinUrl);
+    
     // Gerar o QR Code
     const qrCodeContainer = document.querySelector('.qr-code-image');
     qrCodeContainer.innerHTML = ''; // Limpar conteúdo anterior
     
-    QRCode.toCanvas(qrCodeContainer, checkinUrl, {
+    QRCode.toDataURL(checkinUrl, {
         width: 256,
         height: 256,
         margin: 1,
@@ -1344,8 +1346,18 @@ function showQRCodeModal(event) {
             dark: '#000000',
             light: '#ffffff'
         }
-    }, function (error) {
-        if (error) console.error(error);
+    }, function (error, url) {
+        if (error) {
+            console.error('Erro ao gerar QR Code:', error);
+            alert('Erro ao gerar QR Code. Por favor, tente novamente.');
+            return;
+        }
+        
+        console.log('QR Code gerado com sucesso');
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = `QR Code para check-in do evento ${event.name}`;
+        qrCodeContainer.appendChild(img);
     });
     
     // Atualizar título do modal

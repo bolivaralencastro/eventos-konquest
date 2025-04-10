@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const event = events.find(e => e.id === eventId);
         
         if (!event) {
-            alert('Evento não encontrado.');
+            alert('Evento não encontrado. Por favor, acesse o evento através do QR Code válido.');
             return;
         }
 
         const session = event.sessions.find(s => s.id === sessionId);
         if (!session) {
-            alert('Sessão do evento não encontrada.');
+            alert('Sessão do evento não encontrada. Por favor, acesse o evento através do QR Code válido.');
             return;
         }
 
@@ -35,7 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
         eventTitleEl.textContent = event.name;
         eventTypeIconEl.textContent = event.type === 'Presencial' ? 'location_on' : 'live_tv';
         eventTypeIconEl.className = `material-icons event-type-icon ${event.type.toLowerCase()}`;
-        eventDateEl.textContent = session.date;
+        
+        // Formatar a data
+        const sessionDate = new Date(session.date);
+        const formattedDate = sessionDate.toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        eventDateEl.textContent = formattedDate;
+        
+        // Formatar o horário
         eventTimeEl.textContent = `${session.startTime} - ${session.endTime}`;
     }
 
