@@ -501,11 +501,8 @@
             </button>
         </div>
         <div class="qr-code-content">
-            <div class="qr-code-image">
-                <!-- QR Code será inserido aqui via JS -->
-                <svg width="100%" height="100%" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H9V1H1V9H0V0ZM28 0H19V1H27V9H28V0ZM0 28V19H1V27H9V28H0ZM28 28H19V27H27V19H28V28ZM3 3H7V7H3V3ZM22 3H26V7H22V3ZM3 22H7V26H3V22ZM13 16H16V13H13V10H10V13H7V10H4V13H10V16H13ZM19 13H16V16H19V13ZM22 19H25V22H22V19ZM19 19H10V22H13V25H16V22H19V19ZM22 10H25V13H22V10ZM19 7H13V4H10V7H7V10H10V7H13V10H16V7H19Z" fill="black"></path>
-                </svg>
+            <div class="qr-code-image" id="qr-code-container">
+                <!-- QR Code será gerado aqui dinamicamente -->
             </div>
             <div class="qr-code-actions">
                 <button class="btn" id="copy-svg-btn">

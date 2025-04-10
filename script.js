@@ -1328,36 +1328,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === QR Code Modal Functions ===
 function showQRCodeModal(event) {
-    // Criar uma URL base para o check-in
-    const baseUrl = window.location.origin; // Pega o domínio atual
+    if (!event || !event.sessions || event.sessions.length === 0) {
+        console.error('Evento inválido ou sem sessões');
+        return;
+    }
+
+    // Criar URL completa para o check-in
+    const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
     const checkinUrl = `${baseUrl}/checkin.html?eventId=${event.id}&sessionId=${event.sessions[0].id}`;
     
     console.log('Gerando QR Code para URL:', checkinUrl);
     
-    // Gerar o QR Code
-    const qrCodeContainer = document.querySelector('.qr-code-image');
-    qrCodeContainer.innerHTML = ''; // Limpar conteúdo anterior
+    // Limpar container anterior
+    const qrCodeContainer = document.getElementById('qr-code-container');
+    qrCodeContainer.innerHTML = '';
     
-    QRCode.toDataURL(checkinUrl, {
+    // Criar elemento canvas para o QR Code
+    const canvas = document.createElement('canvas');
+    qrCodeContainer.appendChild(canvas);
+    
+    // Gerar QR Code
+    QRCode.toCanvas(canvas, checkinUrl, {
         width: 256,
         height: 256,
-        margin: 1,
+        margin: 2,
         color: {
             dark: '#000000',
             light: '#ffffff'
-        }
-    }, function (error, url) {
+        },
+        errorCorrectionLevel: 'H'
+    }, function (error) {
         if (error) {
             console.error('Erro ao gerar QR Code:', error);
-            alert('Erro ao gerar QR Code. Por favor, tente novamente.');
+            qrCodeContainer.innerHTML = '<p class="error-message">Erro ao gerar QR Code. Por favor, tente novamente.</p>';
             return;
         }
-        
         console.log('QR Code gerado com sucesso');
-        const img = document.createElement('img');
-        img.src = url;
-        img.alt = `QR Code para check-in do evento ${event.name}`;
-        qrCodeContainer.appendChild(img);
     });
     
     // Atualizar título do modal
@@ -1366,6 +1372,54 @@ function showQRCodeModal(event) {
     // Mostrar o modal
     document.getElementById('qr-code-modal').classList.remove('hidden');
     document.getElementById('modal-backdrop').classList.remove('hidden');
+    
+    // Configurar botões de ação
+    setupQRCodeActions(checkinUrl, event.name);
+}
+
+function setupQRCodeActions(checkinUrl, eventName) {
+    // Configurar botão de cópia
+    const copyButton = document.getElementById('copy-svg-btn');
+    copyButton.onclick = function() {
+        const canvas = document.querySelector('#qr-code-container canvas');
+        if (canvas) {
+            canvas.toBlob(function(blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]).then(function() {
+                    alert('QR Code copiado para a área de transferência!');
+                }).catch(function(error) {
+                    console.error('Erro ao copiar QR Code:', error);
+                    alert('Erro ao copiar QR Code. Por favor, tente novamente.');
+                });
+            });
+        }
+    };
+    
+    // Configurar botão de impressão
+    const printButton = document.getElementById('print-qr-btn');
+    printButton.onclick = function() {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>QR Code - ${eventName}</title>
+                <style>
+                    body { margin: 0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+                    h1 { font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 20px; }
+                    .qr-code { width: 256px; height: 256px; }
+                    .info { font-family: Arial, sans-serif; font-size: 12px; margin-top: 20px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <h1>QR Code - ${eventName}</h1>
+                <img src="${document.querySelector('#qr-code-container canvas').toDataURL()}" class="qr-code"/>
+                <p class="info">URL: ${checkinUrl}</p>
+                <script>window.print(); window.close();</script>
+            </body>
+            </html>
+        `);
+    };
 }
 
 function hideQRCodeModal() {
