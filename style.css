@@ -954,8 +954,17 @@
      .close-modal-btn:hover { background-color: rgba(0,0,0,0.08); }
      .close-modal-btn .material-icons { font-size: inherit; }
      .modal .help-text.modal-help { padding: 16px 24px; font-size: 0.9em; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); margin: 0; flex-shrink: 0; background-color: #fcfcfc; }
-     .modal-content { padding: 0 24px 24px 24px; overflow-y: auto; flex-grow: 1; }
-     details.modal-section { border-bottom: 1px solid var(--background-grey); padding: 20px 0; margin-bottom: 0; }
+    .modal-content {
+        padding: 0 24px 24px 24px;
+        overflow-y: auto;
+        flex-grow: 1;
+        width: 100%;
+    }
+    details.modal-section {
+        border-bottom: 1px solid var(--border-color);
+        padding: 20px 0;
+        margin-bottom: 0;
+    }
      details.modal-section:first-of-type { padding-top: 24px; }
      details.modal-section:last-of-type { border-bottom: none; padding-bottom: 0; }
      details.modal-section summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 12px 0; margin: 0; font-weight: 500; }
