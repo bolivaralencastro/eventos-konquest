@@ -46,8 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         eventDateEl.textContent = formattedDate;
         
-        // Formatar o horário
-        eventTimeEl.textContent = `${session.startTime} - ${session.endTime}`;
+        // Formatar o horário (compatível com diferentes nomes de propriedades)
+        const startTime = session.start || session.startTime;
+        const endTime = session.end || session.endTime;
+        eventTimeEl.textContent = `${startTime} - ${endTime}`;
     }
 
     // Validar identificação do participante
