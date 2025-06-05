@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const startHour = 9 + Math.floor(Math.random() * 3); // 9, 10, 11
                 const endHour = startHour + 2;
                 sessions.push({
+                    id: `sess-${i}-${j+1}`,
                     date: new Date(currentDate),
                     start: `${String(startHour).padStart(2,'0')}:00`,
                     end: `${String(endHour).padStart(2,'0')}:00`
@@ -781,13 +782,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
          // Gather form data
          const sessionsData = [];
-         modalSessionsContainer.querySelectorAll('.session-input').forEach(sessionEl => {
-             sessionsData.push({
-                 date: new Date(sessionEl.querySelector('.session-date').value + 'T00:00:00'), // Ensure date is parsed correctly
-                 start: sessionEl.querySelector('.session-start').value,
-                 end: sessionEl.querySelector('.session-end').value
-             });
-         });
+        modalSessionsContainer.querySelectorAll('.session-input').forEach((sessionEl, index) => {
+            sessionsData.push({
+                id: `sess-${Date.now()}-${index}`,
+                date: new Date(sessionEl.querySelector('.session-date').value + 'T00:00:00'), // Ensure date is parsed correctly
+                start: sessionEl.querySelector('.session-start').value,
+                end: sessionEl.querySelector('.session-end').value
+            });
+        });
          sessionsData.sort((a, b) => a.date - b.date); // Sort sessions by date
 
          const type = document.getElementById('modal-event-type').value;
@@ -1336,6 +1338,13 @@ function showQRCodeModal(event) {
     // Criar URL completa para o check-in
     const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
     const checkinUrl = `${baseUrl}/checkin.html?eventId=${event.id}&sessionId=${event.sessions[0].id}`;
+
+    // Salva a lista de eventos para que a página de check-in possa acessar
+    try {
+        localStorage.setItem('events', JSON.stringify(sampleAdminEvents));
+    } catch (err) {
+        console.error('Falha ao salvar eventos no localStorage:', err);
+    }
     
     console.log('Gerando QR Code para URL:', checkinUrl);
     
