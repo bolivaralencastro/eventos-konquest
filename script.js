@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${dateString}</td>
                 <td>${event.registrations}</td>
                 <td>${event.attendance}</td>
-                <td><span class="status-chip ${event.status}">${event.statusLabel}</span></td>
+                <td><div class="status-tag ${event.status}"><span class="status-dot"></span>${event.statusLabel.toUpperCase()}</div></td>
                 <td>
                     <div class="event-actions">
                         <!-- <button class="icon-button" title="Gerenciar Participantes" data-action="manage"><span class="material-icons">group</span></button> --> <!-- Removed, click row/name -->

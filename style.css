@@ -1,4 +1,4 @@
-     /* === Reset Básico e Tipografia === */
+/* === Reset Básico e Tipografia === */
      * { box-sizing: border-box; margin: 0; padding: 0; }
      body { font-family: 'Roboto', sans-serif; line-height: 1.5; background-color: #f4f7f9; color: #333; }
      html, body { height: 100%; }
@@ -615,8 +615,15 @@
          line-height: 1.2;
          border: 1px solid transparent; /* Para manter o alinhamento */
      }
-     .status-chip.open {
-         background-color: #E3F2FD; color: var(--status-open); border-color: #BBDEFB;
+     .status-chip.open, .status-chip.aberto {
+         background-color: #2196F31A; /* Azul claro translúcido */
+         color: #1976D2; /* Azul forte */
+         border-color: #90CAF9;
+     }
+     .status-chip.realizado {
+         background-color: #43A0471A; /* Verde claro translúcido */
+         color: #388E3C; /* Verde forte */
+         border-color: #A5D6A7;
      }
      .status-chip.concluded {
          background-color: #FFEBEE;
@@ -1303,4 +1310,34 @@
     #success-modal .modal-content p {
         color: var(--md3-on-surface-variant);
         margin: 0 0 24px 0;
+    }
+
+    /* Status Tags */
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px 4px 8px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: bold;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      color: #333;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 7px;
+      display: inline-block;
+    }
+    .status-tag.aberto .status-dot {
+      background-color: #2196F3;
+    }
+    .status-tag.realizado .status-dot {
+      background-color: #43A047;
+    }
+    .status-tag.concluido .status-dot {
+      background-color: #FFEBEE;
     }
