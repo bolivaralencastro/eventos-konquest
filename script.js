@@ -256,9 +256,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Rendering Functions ---
     function renderAdminEventList(eventsToRender) {
-        adminEventTbody.innerHTML = ''; // Clear existing rows
+        adminEventTbody.innerHTML = '';
         if (eventsToRender.length === 0) {
-            adminEventTbody.innerHTML = `<tr class="no-pointer"><td colspan="7" class="empty-state" style="display: table-cell;">Nenhum evento encontrado.</td></tr>`;
+            adminEventTbody.innerHTML = `<tr class="no-pointer"><td colspan="8" class="empty-state" style="display: table-cell;">Nenhum evento encontrado.</td></tr>`;
             adminEventListsContainer.classList.remove('hidden');
             return;
         }
@@ -272,27 +272,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateString = formattedStartDate === formattedEndDate ? formattedStartDate : `${formattedStartDate} - ${formattedEndDate}`;
 
             row.innerHTML = `
-                <td><input type="checkbox" class="md-checkbox" title="Selecionar ${event.name}"></td>
-                <td>
-                    <a href="#" class="event-name" data-action="manage">
-                        <div class="event-type-icon-container">
-                            <span class="material-icons event-type-icon ${event.type.toLowerCase()}">${event.typeIcon}</span>
-                        </div>
-                        <span>${event.name}</span>
-                    </a>
-                </td>
+                <td><input type="checkbox" class="row-checkbox" title="Selecionar ${event.name}"></td>
+                <td><span class="material-icons event-icon">${event.typeIcon}</span></td>
+                <td>${event.name}</td>
                 <td>${dateString}</td>
                 <td>${event.registrations}</td>
                 <td>${event.attendance}</td>
                 <td><div class="status-tag ${event.status}"><span class="status-dot"></span>${event.statusLabel.toUpperCase()}</div></td>
-                <td>
-                    <div class="event-actions">
-                        <!-- <button class="icon-button" title="Gerenciar Participantes" data-action="manage"><span class="material-icons">group</span></button> --> <!-- Removed, click row/name -->
-                        <button class="icon-button" title="Editar" data-action="edit"><span class="material-icons">edit</span></button>
-                        <button class="icon-button" title="Gerar QR Code" data-action="qr"><span class="material-icons">qr_code_2</span></button>
-                        <button class="icon-button" title="Excluir" data-action="delete"><span class="material-icons">delete</span></button>
-                    </div>
-                </td>
+                <td><button class="icon-button" title="Excluir"><span class="material-icons">delete</span></button></td>
             `;
             adminEventTbody.appendChild(row);
         });
@@ -810,9 +797,7 @@ document.addEventListener('DOMContentLoaded', () => {
              participants: isEditingEvent
                  ? sampleAdminEvents.find(e => e.id === editingEventId)?.participants || []
                  : [],
-             registrations: 0, // Recalculated below
-             attendance: 0 // Recalculated below
-             // TODO: Gather category, language, image, settings, people
+             registrations: 0 // Recalculated below
          };
 
          // Recalculate counts based on participant array
