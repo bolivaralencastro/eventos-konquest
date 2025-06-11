@@ -1,0 +1,10 @@
+/* CSS principal: importa variáveis, base, layout, componentes e páginas */
+@import 'variables.css';
+@import 'base.css';
+@import 'layout.css';
+@import 'components/button.css';
+@import 'components/modal.css';
+@import 'components/table.css';
+@import 'components/sidebar.css';
+@import 'pages/gestao-eventos.css';
+@import 'pages/detalhe-evento.css';
