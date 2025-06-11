@@ -1,0 +1,10 @@
+/* Estilos específicos da página de gestão de eventos */
+#event-list-section {
+  background: #fff;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+#event-list-section h1 {
+  margin-bottom: 1.5rem;
+}

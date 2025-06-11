@@ -1,0 +1,27 @@
+/* Sidebar/menu lateral */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem 1rem 1rem;
+}
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar nav ul li {
+  margin-bottom: 1.2em;
+}
+.sidebar nav ul li a {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1em;
+  transition: color 0.2s;
+}
+.sidebar nav ul li a:hover {
+  color: var(--color-accent);
+}

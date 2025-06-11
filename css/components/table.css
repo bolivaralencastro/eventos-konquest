@@ -1,0 +1,21 @@
+/* Tabelas padrão */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.data-table th, .data-table td {
+  padding: 0.8em 1em;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.data-table th {
+  background: var(--color-secondary);
+  font-weight: 600;
+}
+.data-table tr:last-child td {
+  border-bottom: none;
+}

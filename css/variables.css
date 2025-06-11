@@ -1,0 +1,12 @@
+/* Variáveis globais de cor, espaçamento, fontes, etc. */
+:root {
+  --color-primary: #8A4BBE;
+  --color-secondary: #F5F6FA;
+  --color-accent: #F9A826;
+  --color-bg: #fff;
+  --color-text: #222;
+  --color-success: #4BB543;
+  --color-danger: #E74C3C;
+  --border-radius: 6px;
+  --font-main: 'Inter', Arial, sans-serif;
+}

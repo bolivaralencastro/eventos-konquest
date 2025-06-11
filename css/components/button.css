@@ -1,0 +1,22 @@
+/* Botões padrão */
+.button, button, .icon-button {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.5em 1.2em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.button:hover, button:hover, .icon-button:hover {
+  background: #6c3797;
+}
+.icon-button {
+  padding: 0.3em 0.5em;
+  background: none;
+  color: var(--color-primary);
+}
+.icon-button:hover {
+  color: var(--color-accent);
+}
