@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderParticipantList(participantsToRender, selectedSession = 'all') {
          participantTbody.innerHTML = '';
          if (participantsToRender.length === 0) {
-            participantTbody.innerHTML = `<tr class="no-pointer"><td colspan="6" class="empty-state" style="display: table-cell;">Nenhum participante encontrado para os filtros aplicados.</td></tr>`;
+            participantTbody.innerHTML = `<tr class="no-pointer"><td colspan="8" class="empty-state" style="display: table-cell;">Nenhum participante encontrado para os filtros aplicados.</td></tr>`;
             return;
          }
 
@@ -297,23 +297,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = document.createElement('tr');
             row.dataset.participantId = p.id;
 
-            // Determine presence based on selected session
-            let displayPresence = p.present; // Default to overall presence
+            // Presença
+            let displayPresence = p.present;
             if (selectedSession !== 'all' && p.sessionPresence && p.sessionPresence[selectedSession] !== undefined) {
                 displayPresence = p.sessionPresence[selectedSession];
             }
 
+            // Status de matrícula
+            let statusMatricula = p.statusMatricula || 'matriculado';
+            let statusMatriculaLabel = '';
+            let statusMatriculaClass = '';
+            switch (statusMatricula) {
+                case 'concluido':
+                    statusMatriculaLabel = 'Concluído';
+                    statusMatriculaClass = 'status-tag realizado';
+                    break;
+                case 'reprovado':
+                    statusMatriculaLabel = 'Reprovado';
+                    statusMatriculaClass = 'status-tag reprovado';
+                    break;
+                default:
+                    statusMatriculaLabel = 'Matriculado';
+                    statusMatriculaClass = 'status-tag aberto';
+            }
 
+            // Justificativa
+            const justificativa = p.justificativa || '';
             row.innerHTML = `
                 <td><input type="checkbox" class="md-checkbox"></td>
                 <td>
                     <div class="participant-name">
-                        <span class="participant-avatar">${p.avatarInitial}</span>
+                        <span class="participant-avatar">${p.avatarInitial || '?'}</span>
                         <span>${p.name}</span>
                     </div>
                 </td>
                 <td>${p.email}</td>
-                <td>${p.registrationDate.toLocaleDateString('pt-BR')}</td>
+                <td><div class="${statusMatriculaClass}"><span class="status-dot"></span>${statusMatriculaLabel}</div></td>
                 <td>
                     <label class="presence-toggle">
                         <input type="checkbox" ${displayPresence ? 'checked' : ''} data-session="${selectedSession}">
@@ -321,12 +340,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     </label>
                 </td>
                 <td>
+                    <input type="text" class="justificativa-input" value="${justificativa}" placeholder="Justificativa de ausência" ${displayPresence ? 'disabled' : ''} />
+                </td>
+                <td>
                     <div class="action-buttons">
                         <button class="action-button" title="Remover Participante"><span class="material-icons">person_remove</span></button>
                     </div>
                 </td>
-
-`;
+            `;
             participantTbody.appendChild(row);
          });
     }
@@ -370,12 +391,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const eventData = sampleAdminEvents.find(ev => ev.id === eventId);
         if (eventData) {
             // --- Update Header ---
-            mainTitle.textContent = 'Gerenciar Evento'; // Change main title
+            mainTitle.textContent = 'Gerenciar Evento';
             manageEventTitle.textContent = eventData.name;
             manageEventTypeIcon.textContent = eventData.typeIcon;
-            manageEventTypeIcon.className = `material-icons ${eventData.type.toLowerCase()}`; // Update class for color/icon specific style
-            indicatorInscritos.textContent = eventData.participants.length; // Count actual participants
-            indicatorPresentes.textContent = eventData.participants.filter(p => p.present).length; // Count present
+            manageEventTypeIcon.className = `material-icons ${eventData.type.toLowerCase()}`;
+            indicatorInscritos.textContent = eventData.participants.length;
+            indicatorPresentes.textContent = eventData.participants.filter(p => p.present).length;
+
+            // --- Status do Evento ---
+            // Determina status conforme data e presença
+            const today = new Date();
+            const endDate = new Date(eventData.endDate);
+            let status = 'aberto';
+            let statusLabel = 'Aberto';
+            if (endDate < today || eventData.forceConcluded) {
+                status = 'realizado';
+                statusLabel = 'Realizado';
+            }
+            // Remove status antigo se houver
+            let statusTag = manageEventTitle.parentElement.querySelector('.status-tag');
+            if (statusTag) statusTag.remove();
+            // Cria status tag
+            statusTag = document.createElement('div');
+            statusTag.className = `status-tag ${status}`;
+            statusTag.innerHTML = `<span class="status-dot"></span>${statusLabel.toUpperCase()}`;
+            manageEventTitle.parentElement.appendChild(statusTag);
 
             // --- Update Date/Session Display ---
             const sessions = eventData.sessions || [];

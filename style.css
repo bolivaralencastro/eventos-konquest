@@ -607,13 +607,15 @@
          display: inline-flex;
          align-items: center;
          gap: 4px;
-         padding: 4px 8px;
-         border-radius: 12px; /* Mais arredondado */
-         font-size: 11px; /* Menor */
+         padding: 4px 10px;
+         border-radius: 12px;
+         font-size: 11px;
          font-weight: 500;
          text-transform: uppercase;
          line-height: 1.2;
-         border: 1px solid transparent; /* Para manter o alinhamento */
+         border: 1px solid transparent;
+         background: #e3f2fd;
+         color: #1976d2;
      }
      .status-chip.open, .status-chip.aberto {
          background-color: #2196F31A; /* Azul claro translúcido */
@@ -629,6 +631,11 @@
          background-color: #FFEBEE;
          border-color: #FFCDD2;
          color: #C62828;
+     }
+     .status-chip.reprovado {
+         background: #ffebee;
+         color: #c62828;
+         border-color: #ffcdd2;
      }
      /* Adicionar mais estilos de status aqui (cancelled, draft, etc.) */
 
@@ -1340,4 +1347,9 @@
     }
     .status-tag.concluido .status-dot {
       background-color: #FFEBEE;
+    }
+    .status-tag.reprovado {
+        background: #ffebee;
+        color: #c62828;
+        border-color: #ffcdd2;
     }
