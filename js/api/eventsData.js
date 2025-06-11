@@ -1,0 +1,16 @@
+export const events = [
+  {
+    id: 1,
+    name: "Workshop Front-end Moderno",
+    type: "Presencial",
+    status: "ABERTO",
+    startDate: "2025-09-10",
+    endDate: "2025-09-10",
+    registrations: 30,
+    attendance: 18,
+    description: "Aprenda as melhores práticas de front-end.",
+    sessions: [
+      { id: "sess-1-1", date: "2025-09-10", start: "09:00", end: "12:00" }
+    ]
+  }
+];
