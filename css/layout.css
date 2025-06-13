@@ -1,7 +1,16 @@
 /* Layout principal */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-secondary);
+}
 .main-content {
-  margin-left: 220px;
-  padding: 2rem 2rem 2rem 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
 }
 #sidebar-container {
   position: fixed;
@@ -13,4 +22,14 @@
 }
 #header-container {
   margin-bottom: 2rem;
+}
+#event-list-section, #event-detail-section {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+.data-table {
+  box-shadow: none;
+  border-radius: 0;
 }
